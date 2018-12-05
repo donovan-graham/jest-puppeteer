@@ -51,5 +51,11 @@ export async function setup() {
 
 export async function teardown() {
   await teardownServer()
-  await browser.close()
+
+  const config = await readConfig()
+  if (config.connect) {
+    await browser.disconnect()
+  } else {
+    await browser.close()
+  }
 }
